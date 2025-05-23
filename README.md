@@ -1,2 +1,0 @@
-# ConfigNVim
-Config NeoVim
