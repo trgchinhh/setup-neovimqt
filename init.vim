@@ -1,119 +1,111 @@
+" VIM SETUP BY 
+"
+" ████████╗██████╗░██╗░░░██╗░█████╗░███╗░░██╗░██████╗░    ░█████╗░██╗░░██╗██╗███╗░░██╗██╗░░██╗
+" ╚══██╔══╝██╔══██╗██║░░░██║██╔══██╗████╗░██║██╔════╝░    ██╔══██╗██║░░██║██║████╗░██║██║░░██║
+" ░░░██║░░░██████╔╝██║░░░██║██║░░██║██╔██╗██║██║░░██╗░    ██║░░╚═╝███████║██║██╔██╗██║███████║
+" ░░░██║░░░██╔══██╗██║░░░██║██║░░██║██║╚████║██║░░╚██╗    ██║░░██╗██╔══██║██║██║╚████║██╔══██║
+" ░░░██║░░░██║░░██║╚██████╔╝╚█████╔╝██║░╚███║╚██████╔╝    ╚█████╔╝██║░░██║██║██║░╚███║██║░░██║
+" ░░░╚═╝░░░╚═╝░░╚═╝░╚═════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░    ░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
+
+
+" === PLUGIN CÀI ĐẶT ===
 call plug#begin('~/.vim/plugged')
 
-" Cài đặt theme One Dark
+" Theme One Dark
 Plug 'joshdick/onedark.vim'
-" Cài đặt plugin auto-pairs
+
+" Tự động đóng dấu ngoặc
 Plug 'jiangmiao/auto-pairs'
-" Status bar
+
+" Thanh trạng thái Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" (Tùy chọn) Hỗ trợ LSP
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
-" Cấu hình theme
+" === GIAO DIỆN ===
 syntax enable
 set background=dark
 colorscheme onedark
+set number                    " Hiển thị số dòng
+set guifont=Consolas:h11      " Font GUI (GVim, Neovim-Qt)
 
-" Enable clipboard support (requires Vim to be compiled with +clipboard)
+" === THIẾT LẬP THAO TÁC BÀN PHÍM ===
+
+" Clipboard
 set clipboard=unnamedplus
+vnoremap <C-c> "+y            " Copy
+vnoremap <C-x> "+d            " Cut
+nnoremap <C-v> "+p            " Paste (Normal)
+inoremap <C-v> <Esc>"+pa      " Paste (Insert)
+nnoremap <C-y> "+p            " Paste (Normal)
+inoremap <C-y> <Esc>"+pa      " Paste (Insert)
 
-" Map Ctrl+C to copy (copy selected text to clipboard)
-vnoremap <C-c> "+y
-
-" Map Ctrl+V to paste (paste from clipboard)
-nnoremap <C-v> "+p
-inoremap <C-v> <Esc>"+pa
-
-" Map Ctrl+Z to undo
+" Undo / Redo
 nnoremap <C-z> u
 inoremap <C-z> <Esc>u
-
-" Map Ctrl+Y to redo
 nnoremap <C-y> <C-r>
 inoremap <C-y> <Esc><C-r>
 
-" Map Ctrl+S to save the file
+" Save / Quit / Tab
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>
-
-" Map Ctrl+Q to quit Neovim
 nnoremap <C-q> :q!<CR>
 inoremap <C-q> <Esc>:q!<CR>
-
-" Map Ctrl+Shift+T to open a new tab (if you're using tabpages)
 nnoremap <C-S-t> :tabnew<CR>
-
-" Map Ctrl+P to open file (similar to editor search file)
-nnoremap <C-p> :Telescope find_files<CR>
-
-" Map Ctrl+Shift+W to close a tab (if you're using tabpages)
 nnoremap <C-S-w> :tabclose<CR>
+nnoremap <C-p> :Telescope find_files<CR>    " Mở tìm file (cần Telescope)
+nnoremap <C-S-n> :terminal<CR>              " Mở Terminal
 
-" Map Ctrl+Shift+N to open a terminal window inside Neovim
-nnoremap <C-S-n> :terminal<CR>
-
-" Map Ctrl+H, Ctrl+J, Ctrl+K, Ctrl+L for window navigation (like tmux)
+" Di chuyển giữa các cửa sổ
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" Gán Ctrl+A để chọn tất cả nội dung trong file
+
+" Chọn tất cả và chọn dòng
 nnoremap <C-a> ggVG
-" Sử dụng 4 spaces thay vì Tab
-set tabstop=4       " Độ dài của Tab
-set shiftwidth=4    " Số spaces khi indent
-set expandtab       " Sử dụng spaces thay vì tab khi nhấn Tab
-set softtabstop=4   " Sử dụng 4 spaces khi nhấn Tab trong chế độ Insert
-" Tự động indent khi soạn thảo
-set smartindent
-set autoindent
-set cindent
-" Gán Ctrl+X để cut (cắt text vào clipboard)
-vnoremap <C-x> "+d
+inoremap <C-a> <Esc>ggVG
+nnoremap <C-l> V
+inoremap <C-l> <Esc>V
+nnoremap l Vj                " Tiếp tục chọn dòng khi nhấn `l`
 
-" Gán Ctrl+Y để paste (dán từ clipboard vào)
-nnoremap <C-y> "+p
-inoremap <C-y> <Esc>"+pa
+" Dòng mới không mất khối chọn (Enter)
+xnoremap <CR> o<Esc>
+xnoremap <BS> d              " Xóa khối bôi đen với Backspace
 
-" Khởi động Neovim ở Insert mode
+" Di chuyển dòng lên/xuống
+nnoremap <C-S-Up> :m-2<CR>==
+nnoremap <C-S-Down> :m+<CR>==
+
+" === TỰ ĐỘNG CHUYỂN INSERT/NORMAL ===
+
+" Vào Insert mode khi mở file
 autocmd VimEnter * startinsert
 
-" Đảo ngược hành vi của phím Esc để vào Normal mode lần đầu tiên
+" Toggle giữa Insert và Normal bằng phím Esc
 let g:esc_in_insert_mode = 1
 inoremap <Esc> <Esc>:call ToggleInsertNormal()<CR>
 nnoremap <Esc> :call ToggleInsertNormal()<CR>
 
-" Hàm toggle chuyển giữa Insert mode và Normal mode
 function! ToggleInsertNormal()
   if g:esc_in_insert_mode == 1
-    " Nếu đang ở Insert mode, chuyển sang Normal mode
     normal!
     let g:esc_in_insert_mode = 0
   else
-    " Nếu đang ở Normal mode, chuyển lại Insert mode
     startinsert
     let g:esc_in_insert_mode = 1
   endif
 endfunction
 
-" Map Ctrl+A để chọn tất cả (Select All) trong Insert mode
-inoremap <C-a> <Esc>ggVG
-" Map Ctrl+L để bôi đen dòng hiện tại
-nnoremap <C-l> V
-inoremap <C-l> <Esc>V
-" Map Ctrl+L và mỗi lần nhấn 'l' thêm 1 dòng để bôi đen tiếp
-nnoremap <C-l> V
-nnoremap l Vj
-" Xóa khối bôi đen khi nhấn Backspace (Giống Sublime Text)
-xnoremap <BS> d
-
-" Tạo dòng mới mà không mất khối khi nhấn Enter
-xnoremap <CR> o<Esc>
-" Set font and size for GUI Neovim (Neovim-Qt, GVim)
-set guifont=Consolas:h11
-" Move selected line up
-nnoremap <C-S-Up> :m-2<CR>==
-" Move selected line down
-nnoremap <C-S-Down> :m+<CR>==
-" Hiển thị số dòng
-set number
+" === THIẾT LẬP INDENT ===
+set tabstop=4         " Độ dài 1 tab = 4 spaces
+set shiftwidth=4      " Thụt vào khi auto-indent = 4
+set expandtab         " Dùng spaces thay vì tab
+set softtabstop=4     " Khi nhấn Tab, chèn 4 spaces
+set smartindent       " Tự indent thông minh
+set autoindent        " Tự động indent dòng mới
+set cindent           " Hỗ trợ indent kiểu C/C++
