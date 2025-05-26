@@ -23,6 +23,9 @@ Plug 'vim-airline/vim-airline-themes'
 " (Tùy chọn) Hỗ trợ LSP
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Line dọc canh hàng code  
+Plug 'Yggdroot/indentLine'
+
 call plug#end()
 
 " === GIAO DIỆN ===
@@ -108,3 +111,6 @@ set softtabstop=4     " Khi nhấn Tab, chèn 4 spaces
 set smartindent       " Tự indent thông minh
 set autoindent        " Tự động indent dòng mới
 set cindent           " Hỗ trợ indent kiểu C/C++
+let g:indentLine_char = '│' " Hỗ trợ line sau mỗi tab
+let g:indentLine_enabled = 1 
+
