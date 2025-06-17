@@ -9,7 +9,13 @@
 "                               __/ |                             
 "                              |___/                                                                                                                                                                                             
 " === PLUGIN CÀI ĐẶT ===
+set nocompatible
+filetype plugin indent on
+set termguicolors  " Bắt buộc để hỗ trợ màu 24-bit
+
 call plug#begin('~/.vim/plugged')
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " QUAN TRỌNG: Highlight
 
 Plug 'goolord/alpha-nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -18,6 +24,10 @@ Plug 'folke/persistence.nvim'
 
 " Theme One Dark
 Plug 'joshdick/onedark.vim'
+Plug 'Mofiqul/dracula.nvim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+
 
 " Tự động đóng dấu ngoặc
 Plug 'jiangmiao/auto-pairs'
@@ -34,16 +44,14 @@ Plug 'Yggdroot/indentLine'
 
 " Trình quản lý file
 Plug 'preservim/nerdtree'
-"Plug 'Xuyuanp/nerdtree-git-plugin'
-"Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'"
-
-"Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 "Plug 'neovim/nvim-lspconfig'
 
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
-"Plug 'nvim-tree/nvim-web-devicons'  " nếu dùng GUI hoặc muốn có icon
+Plug 'nvim-tree/nvim-web-devicons'  " nếu dùng GUI hoặc muốn có icon
 
 "Plug 'mhinz/vim-startify'
 Plug 'goolord/alpha-nvim'
@@ -52,8 +60,23 @@ Plug 'goolord/alpha-nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+Plug 'voldikss/vim-floaterm'
+
 call plug#end()
 
+
+lua << EOF
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { 'c', 'cpp', 'lua', 'python' },  
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,  
+  },
+}
+EOF
+
+" === CẤU HÌNH COC (tránh xung đột màu) ===
+let g:coc_disable_transparent_cursor = 1
 
 
 " 2. CẤU HÌNH ALPHA.NVIM
@@ -112,8 +135,16 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " === GIAO DIỆN ===
 syntax enable
 set background=dark
-colorscheme onedark
+"colorscheme onedark
+colorscheme dracula
+"colorscheme palenight
+"colorscheme catppuccin
+
+let g:airline_theme = 'onedark'
+"let g:airline_powerline_fonts = 1
+
 set number
+"set guifont=DejaVuSansM\ Nerd\ Font\ Mono:h10
 set guifont=Consolas:h11
 "set showtabline=2
 
@@ -254,6 +285,10 @@ endfunction
 nnoremap <silent> <F9> :call ToggleTerminal()<CR>
 "nnoremap <F11> :GuiWindowFullScreen<CR>
 
+let g:floaterm_position = 'topright'
+let g:floaterm_width = 0.5
+let g:floaterm_height = 0.6
+
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -277,3 +312,9 @@ vnoremap <Tab> >gv
 
 " Visual Mode: Shift-Tab để thụt ra
 vnoremap <S-Tab> <gv
+
+nnoremap <silent> <F9> :FloatermToggle<CR>
+
+" Nếu muốn dùng cả ở chế độ terminal:
+tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
+
