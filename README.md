@@ -1,4 +1,4 @@
-# Config NeoVim-QT by Truong Chinh
+# Config Neovim-qt by Truong Chinh
 
 ## Photo 
 
