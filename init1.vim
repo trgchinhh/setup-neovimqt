@@ -68,6 +68,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'voldikss/vim-floaterm'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+"Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
@@ -315,3 +318,8 @@ tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
 
 nmap \rn <Plug>(coc-rename)
 nmap <leader>rn <Plug>(coc-rename)
+let g:Illuminate_use_highlight = 0
+vnoremap ? :Commentary<CR>
+set statusline+=%{FugitiveHead()}
+" Hiện branch Git ở statusline
+"set statusline=%f\ %h%m%r\ %{FugitiveHead()}
