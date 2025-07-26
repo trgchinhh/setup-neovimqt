@@ -1,0 +1,16 @@
+{
+  "pyright": {
+    "disableOrganizeImports": false,
+    "inlayHints": {
+      "functionReturnTypes": false,
+      "variableTypes": false,
+      "parameterTypes": false
+    }
+  },
+  "suggest": {
+    "enablePreview": false
+  },
+  "clangd.inlayHints.enable": false,
+  "inlayHints.enable": false,
+  "signature.enable": false
+}

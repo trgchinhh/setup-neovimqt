@@ -9,9 +9,8 @@
 "                               __/ |                             
 "                              |___/                                                                                                                                                                                             
 " === PLUGIN CÀI ĐẶT ===
-set nocompatible
+
 filetype plugin indent on
-set termguicolors  " Bắt buộc để hỗ trợ màu 24-bit
 
 call plug#begin('~/.vim/plugged')
 
@@ -22,11 +21,12 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim' " Dependency cho Telescope
 Plug 'folke/persistence.nvim'
 
-" Theme One Dark
+" Theme
 Plug 'joshdick/onedark.vim'
 Plug 'Mofiqul/dracula.nvim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'Mofiqul/vscode.nvim'
 
 
 " Tự động đóng dấu ngoặc
@@ -48,12 +48,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'"
 
-"Plug 'neovim/nvim-lspconfig'
-
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'nvim-tree/nvim-web-devicons'  " nếu dùng GUI hoặc muốn có icon
 
-"Plug 'mhinz/vim-startify'
 Plug 'goolord/alpha-nvim'
 
 " Fuzzy finder
@@ -61,9 +58,30 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'voldikss/vim-floaterm'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons' " (nên có để có icon đẹp)
+
+" map mini 
+"Plug 'echasnovski/mini.nvim'
+"Plug 'gorbit99/codewindow.nvim'
 
 call plug#end()
 
+set nocompatible
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=4
+set smartindent
+set autoindent
+set cindent
+set number
+"set guifont=DejaVuSansM\ Nerd\ Font\ Mono:h10.49
+"set guifont=Consolas:h11.4
+set guifont=FiraCode\ Nerd\ Font\ Mono:h11
 
 lua << EOF
 require('nvim-treesitter.configs').setup {
@@ -78,7 +96,6 @@ EOF
 " === CẤU HÌNH COC (tránh xung đột màu) ===
 let g:coc_disable_transparent_cursor = 1
 
-
 " 2. CẤU HÌNH ALPHA.NVIM
 lua << EOF
 -- Chỉ load khi plugin đã cài đặt
@@ -92,9 +109,11 @@ if vim.fn.exists('g:plugs["alpha-nvim"]') == 1 then
     "░░░██║░░░██████╔╝██║░░░██║██║░░██║██╔██╗██║██║░░██╗     ██║░░╚═╝███████║██║██╔██╗██║███████║",
     "░░░██║░░░██╔══██╗██║░░░██║██║░░██║██║╚████║██║░░╚██     ██║░░██╗██╔══██║██║██║╚████║██╔══██║",
     "░░░██║░░░██║░░██║╚██████╔╝╚█████╔╝██║░╚███║╚██████╔╝    ╚█████╔╝██║░░██║██║██║░╚███║██║░░██║",
-    "░░░╚═╝░░░╚═╝░░╚═╝░╚═════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░    ░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝╚═╝░░╚═╝"
+    "░░░╚═╝░░░╚═╝░░╚═╝░╚═════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░    ░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝╚═╝░░╚═╝",
+    "                                                                                            ",
+    "                              CHINH DEP TRAI SO 1 THE GIOI                                  ",
+    "                          HAY CODE EM ĐI MA ANH CHINH DEP TRAI                              "
   }
-
   dashboard.section.buttons.val = {
     dashboard.button("e", "New text file", ":ene <BAR> startinsert <CR>"),
     dashboard.button("f", "Find file in D", ":lua require('telescope.builtin').find_files({cwd = 'D:/'})<CR>"),
@@ -103,7 +122,7 @@ if vim.fn.exists('g:plugs["alpha-nvim"]') == 1 then
     dashboard.button("q", "Quit NeoVim", ":qa<CR>"),
 }
 
-  dashboard.section.footer.val = "WELCOME CHINH TO NEOVIM !"
+  dashboard.section.footer.val = "CHAO MUNG ANH CHINH DEP TRAI DEN VOI EM !"
 
   alpha.setup(dashboard.config)
 end
@@ -124,33 +143,49 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
-
-
-" === CẤU HÌNH SHELL CHO TERMINAL (MSYS2) ===
-"set shell=C:\\msys64\\usr\\bin\\bash.exe
-"set shellcmdflag=-c
-"set shellquote=
-"set shellxquote=
-
 " === GIAO DIỆN ===
 syntax enable
+set termguicolors  " Bắt buộc để hỗ trợ màu 24-bit
 set background=dark
-"colorscheme onedark
-colorscheme dracula
+"colorscheme onedark      
+"colorscheme dracula
 "colorscheme palenight
 "colorscheme catppuccin
+colorscheme vscode
+
+" 2D2D30
+
+"highlight Normal       guibg=#2D2D30
+"highlight NonText      guibg=#2D2D30
+"highlight NormalNC     guibg=#2D2D30
+"highlight EndOfBuffer  guibg=#2D2D30
+"highlight LineNr       guibg=#2D2D30
+"highlight SignColumn   guibg=#2D2D30
+
+" Popup menu (gợi ý tự động)
+"highlight Pmenu        guibg=#2D2D30
+"highlight Pmenu        guibg=#3C435E
+"highlight PmenuSel     guibg=#3C435E "#3A3A3A guifg=#FFFFFF
+
+" Menu scrollbar
+"highlight PmenuSbar    guibg=#2D2D30
+"highlight PmenuThumb   guibg=#505050
+
+"Floating window (LSP hover, signature help...)
+"highlight NormalFloat  guibg=#2D2D30
+highlight NormalFloat  guibg=#292D3E "3C435E "2D3144
+
+" Border (nếu có, tuỳ plugin)
+"highlight FloatBorder  guibg=#2D2D30 guifg=#606060
+
 
 let g:airline_theme = 'onedark'
-"let g:airline_powerline_fonts = 1
-
-set number
-"set guifont=DejaVuSansM\ Nerd\ Font\ Mono:h10
-set guifont=Consolas:h11
-"set showtabline=2
+let g:airline_powerline_fonts = 1
+"set showtabline=1
 
 " === TUỲ CHỈNH MÀU CHO KHUNG GỢI Ý CODE ===
-highlight Pmenu guibg=#2e3440 guifg=#ffffff
-highlight PmenuSel guibg=#4c566a guifg=#ffffff
+"highlight Pmenu guibg=#2e3440 guifg=#ffffff
+"highlight PmenuSel guibg=#4c566a guifg=#ffffff
 
 " === THAO TÁC BÀN PHÍM ===
 
@@ -220,8 +255,9 @@ inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
 
 
 set termguicolors
-autocmd VimEnter * call s:setup_lualine()
-function! s:setup_lualine() abort
+
+autocmd VimEnter * call s:setup_bufferline()
+function! s:setup_bufferline() abort
 lua<<EOF
 require("bufferline").setup{
   options = {
@@ -229,6 +265,7 @@ require("bufferline").setup{
       style = 'none',
     },
     diagnostics = "coc",
+    
   }
 }
 EOF
@@ -245,18 +282,10 @@ highlight BufferLineErrorSelected gui=bold guifg=#ff5555
 "highlight BufferLineErrorVisible gui=NONE
 "highlight BufferLineErrorSelected gui=NONE
 
-
 " === INDENT ===
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set softtabstop=4
-set smartindent
-set autoindent
-set cindent
-let g:indentLine_char = '¦'
+"let g:indentLine_char = '¦'
+let g:indentLine_char = '⎸'
 let g:indentLine_enabled = 1
-
 
 "nnoremap <silent> <F5> :NERDTreeClose<CR>:cd D:/<CR>:NERDTree<CR>
 function! ToggleNERDTreeWithCD(path)
@@ -272,7 +301,10 @@ endfunction
 nnoremap <silent> <F5> :call ToggleNERDTreeWithCD('D:/')<CR>
 " Mở C:/ trong NERDTree (F6)
 nnoremap <silent> <F6> :call ToggleNERDTreeWithCD('C:/')<CR>
-
+" Mở D:/Git trong NERDTree (F7)
+nnoremap <silent> <F7> :call ToggleNERDTreeWithCD('D:/Git')<CR>
+" Mở D:/Library_Python trong NERDTree (F7)
+"nnoremap <silent> <F7> :call ToggleNERDTreeWithCD('D:/Library_Python')<CR>
 
 function! ToggleTerminal()
     if &buftype ==# 'terminal'
@@ -288,7 +320,6 @@ nnoremap <silent> <F9> :call ToggleTerminal()<CR>
 let g:floaterm_position = 'topright'
 let g:floaterm_width = 0.5
 let g:floaterm_height = 0.6
-
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -313,8 +344,28 @@ vnoremap <Tab> >gv
 " Visual Mode: Shift-Tab để thụt ra
 vnoremap <S-Tab> <gv
 
-nnoremap <silent> <F9> :FloatermToggle<CR>
 
-" Nếu muốn dùng cả ở chế độ terminal:
+"nnoremap <silent> <F9> :FloatermNew --cwd=<buffer> --name=term<CR>
+"tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle term<CR>
+
+nnoremap <silent> <F9> :FloatermToggle<CR>
 tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
 
+
+nmap \rn <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
+let g:Illuminate_use_highlight = 0
+vnoremap ? :Commentary<CR>
+set statusline+=%{FugitiveHead()}
+" Hiện branch Git ở statusline
+"set statusline=%f\ %h%m%r\ %{FugitiveHead()}
+
+"lua << EOF
+"require('codewindow').setup({
+"  auto_enable = true,
+"  exclude_filetypes = { 'NvimTree', 'packer' },
+"})
+"require('codewindow').apply_default_keybinds()
+"EOF
+
+"nnoremap <silent> <F3> :lua require('codewindow').toggle_minimap()<CR>
