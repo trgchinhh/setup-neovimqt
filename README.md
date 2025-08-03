@@ -1,12 +1,14 @@
-# Config Neovim-qt by Truong Chinh
+# Setup neovim by Truong Chinh
 
 ## Photo 
 
-![image](https://github.com/user-attachments/assets/87d7e384-260c-4c1f-9a53-b148d4f0c96a)
-![image](https://github.com/user-attachments/assets/2e6124e2-86d0-43c8-8a32-24dac15f6e93)
-![image](https://github.com/user-attachments/assets/0b1754d2-2137-470d-918a-891a34f53191)
-![image](https://github.com/user-attachments/assets/17db80ff-7b3b-492f-a6a6-e6918314b677)
-![image](https://github.com/user-attachments/assets/7d6d98b8-70e5-48cc-99a0-177c7af87622)
-![image](https://github.com/user-attachments/assets/9b908071-408d-4c46-b0d9-188745aa80e3)
-![image](https://github.com/user-attachments/assets/76791255-b877-418f-8834-413ad329445f)
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/7f262989-59b1-4cbc-bfa7-f2c9e9d3f9fe" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/31ff183d-d79f-4463-9f9f-713c2d972151" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/455f818a-537b-4323-851c-f0fa0b4985a8" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/c6ae5260-4fe2-4a89-978a-d8c59ef8d14a" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/310ae3dc-aa84-48cc-9824-0f661af67238" />
+
+
+
+
 
