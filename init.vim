@@ -24,8 +24,8 @@ Plug 'folke/persistence.nvim'
 
 " Theme
 "Plug 'joshdick/onedark.vim'
-"Plug 'Mofiqul/dracula.nvim'
-"Plug 'drewtempelmeyer/palenight.vim'
+Plug 'Mofiqul/dracula.nvim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'Mofiqul/vscode.nvim'
 "Plug 'navarasu/onedark.nvim'
@@ -72,6 +72,12 @@ Plug 'nvim-tree/nvim-web-devicons' " (nên có để có icon đẹp)
 "Plug 'echasnovski/mini.nvim'
 "Plug 'gorbit99/codewindow.nvim'
 
+" snippet 
+"Plug 'neoclide/coc-snippets'
+
+" scrollbar
+"Plug 'petertriho/nvim-scrollbar'
+
 call plug#end()
 
 set nocompatible
@@ -87,7 +93,7 @@ set number
 "set guifont=DejaVuSansM\ Nerd\ Font\ Mono:h10.4
 "set guifont=Consolas:h11.6
 "set guifont=FiraCode\ Nerd\ Font\ Mono:h11
-"set guifont=Consolas\ 7NF:h11.6
+"set guifont=Consolas\ 7NF:h12
 set guifont=JetBrains\ Mono:h11
 
 
@@ -119,8 +125,8 @@ if vim.fn.exists('g:plugs["alpha-nvim"]') == 1 then
     "░░░██║░░░██║░░██║╚██████╔╝╚█████╔╝██║░╚███║╚██████╔╝    ╚█████╔╝██║░░██║██║██║░╚███║██║░░██║",
     "░░░╚═╝░░░╚═╝░░╚═╝░╚═════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░    ░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝╚═╝░░╚═╝",
     "                                                                                            ",
-    "                           ANH CHINH DEP TRAI SO 1 THE GIOI                                 ",
-    "                        HAY CODE EM ĐI MA ANH CHINH DEP TRAI                                "
+    "                                AUTHOR: NGUYEN TRUONG CHINH                                 ",
+    "                            GITHUB: https://github.com/trgchinhh                            "
   }
   dashboard.section.buttons.val = {
     dashboard.button("e", "New text file", ":ene <BAR> startinsert <CR>"),
@@ -130,7 +136,7 @@ if vim.fn.exists('g:plugs["alpha-nvim"]') == 1 then
     dashboard.button("q", "Quit NeoVim", ":qa<CR>"),
 }
 
-  dashboard.section.footer.val = "CHAO MUNG ANH CHINH DEP TRAI DEN VOI EM !"
+  dashboard.section.footer.val = "WELCOME TO MY NEOVIM SETUP !"
 
   alpha.setup(dashboard.config)
 end
@@ -364,7 +370,6 @@ EOF
 endfunction
 
 
-
 " lua << EOF
 " require('lualine').setup {
 "   options = {
@@ -462,8 +467,6 @@ endfunction
 " EOF
 
 
-
-
 "let g:airline#extensions#tabline#enabled = 1
 
 
@@ -537,14 +540,53 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <F1> :Alpha<CR>
 "lua require("alpha_custom")
 
+" Màu sắc cho FZF
+hi! fzf_fg ctermfg=14
+hi! fzf_fgp ctermfg=3
+hi! fzf_hl ctermfg=5
+hi! fzf_hlp ctermfg=5
+hi! fzf_info ctermfg=6
+hi! fzf_prompt ctermfg=6
+hi! fzf_spinner ctermfg=6
+hi! fzf_pointer ctermfg=3
+
+let g:fzf_colors = {
+    \ 'fg':      ['fg', 'fzf_fg'],
+    \ 'hl':      ['fg', 'fzf_hl'],
+    \ 'fg+':     ['fg', 'fzf_fgp'],
+    \ 'hl+':     ['fg', 'fzf_hlp'],
+    \ 'info':    ['fg', 'fzf_info'],
+    \ 'prompt':  ['fg', 'fzf_prompt'],
+    \ 'pointer': ['fg', 'fzf_pointer'],
+    \ 'spinner': ['fg', 'fzf_spinner'] }
+
+" Layout FZF
+let g:fzf_layout = { 'window': { 'width': 0.85, 'height': 0.6, 'border': 'rounded' } }
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+" Command tìm file với preview
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': [
+    \ '--layout=reverse', '--info=inline', '--border', '--preview-window=right:50%'
+    \ ]}), <bang>0)
+
+" Command tìm trong file hiện tại
+command! -bang BLines
+    \ call fzf#vim#buffer_lines(<bang>0)
+
+" Map phím
+nnoremap <silent> <F6> :BLines<CR>
+nnoremap <silent> <F7> :cd D:/ \| Files<CR>
+
 " Tìm từ trong file hiện tại bằng :BLines (tìm trong dòng hiện tại)
-noremap <silent> ff :BLines<CR>
+"noremap <silent> ff :BLines<CR>
 
 " Tìm từ trong tất cả file, mặc định thư mục là ổ D:
-noremap <silent> F :cd D:/ \| Rg<Space>
+"noremap <silent> F :cd D:/ \| Rg<Space>
 
-vnoremap <silent> ff y:BLines <C-R>"<CR>
-vnoremap <silent> F y:cd D:/ \| execute 'Rg ' . shellescape(@")<CR>
+
+"vnoremap <silent> ff y:BLines <C-R>"<CR>
+"vnoremap <silent> F y:cd D:/ \| execute 'Rg ' . shellescape(@")<CR>
 
 " Visual Mode: Tab để thụt vào
 vnoremap <Tab> >gv
@@ -570,11 +612,10 @@ nnoremap <silent> <F9> :call ToggleFixedDTerminal()<CR>
 tnoremap <silent> <F9> <C-\><C-n>:call ToggleFixedDTerminal()<CR>
 
 nmap \rn <Plug>(coc-rename)
-nmap <leader>rn <Plug>(coc-rename)
+"nmap <leader>rn <Plug>(coc-rename)
 let g:Illuminate_use_highlight = 0
 vnoremap ? :Commentary<CR>
 set statusline+=%{FugitiveHead()}
 " Hiện branch Git ở statusline
 "set statusline=%f\ %h%m%r\ %{FugitiveHead()}
-
 
