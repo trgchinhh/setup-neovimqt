@@ -1,0 +1,205 @@
+lua << EOF
+local colors = {
+  warning_bg = '#D7BA7D', -- vàng giống VSCode warning
+  error_bg   = '#F44747', -- đỏ giống VSCode error
+  fg         = '#ffffff',
+}
+local last_file = ''
+local colors = require("lualine.themes.onedark")
+
+-- ép phần dư có cùng màu bg
+colors.normal.c = { fg = colors.normal.c.fg, bg = colors.normal.c.bg }
+require('lualine').setup {
+  options = {
+    --theme = "onedark",
+    theme = function()
+      local vscode = require("lualine.themes.onedark")
+      -- bỏ bold ở các section
+      for _, mode in pairs(vscode) do
+        for _, section in pairs(mode) do
+          if section.gui == 'bold' then
+            section.gui = 'bold'
+          end
+        end
+      end
+      return vscode
+    end,
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    icons_enabled = true,
+    always_divide_middle = false,
+    -- tắt ký hiệu phân cách
+    --component_separators = { left = '', right = '' },
+    --section_separators   = { left = '', right = '' },
+    globalstatus = true,
+  },  
+
+  sections = {
+    lualine_a = { 'mode' },
+
+    lualine_b = {
+      {
+        'branch',
+        color = { fg = "#FFFFFF", bg = nil }, -- chữ trắng
+        separator = '' -- bỏ separator mặc định
+      },
+      {
+        function() return '' end, -- dấu ngăn
+        color = { fg = "#FFFFFF", bg = nil }, -- màu trắng
+        padding = { left = 0, right = 0 },
+      },
+      {
+        'diff',
+        color = { fg = nil, bg = nil },
+        separator = ''
+      },
+      -- 
+      {
+        function() return '' end,
+        color = { fg = "#FFFFFF", bg = nil },
+        padding = { left = 0, right = 0 },
+      },
+    },
+
+    -- biến toàn cục để nhớ file cuối cùn
+
+    lualine_c = {
+      {
+        function()
+          local buftype = vim.bo.buftype
+          local fname = vim.api.nvim_buf_get_name(0)
+
+          -- Nếu đang ở terminal thì dùng lại file cũ
+          if buftype == 'terminal' then
+            if last_file ~= '' then
+              return vim.fn.fnamemodify(last_file, ':p')
+            else
+              return '[Terminal]'
+            end
+          end
+
+          -- Nếu là file bình thường thì cập nhật last_file
+          if fname ~= '' then
+            last_file = fname
+            return vim.fn.fnamemodify(fname, ':p')
+          else
+            return '[No Name]'
+          end
+        end,
+        color = { fg = '#ffffff', bg = nil },
+      }
+    },
+
+
+    lualine_x = {
+      {
+        'filetype',
+        icons_enabled = false, -- tắt icon
+      },
+    },
+
+    lualine_y = {
+      -- Mũi tên sang trái ()
+      {
+        function() return '' end,
+        color = { fg = "#FFFFFF", bg = nil },  -- fg = nền UTF-8, bg = nền bên trái
+        padding = { left = 0, right = 0 },
+      },
+      -- Phần encoding + fileformat
+      {
+        function()
+          local enc = vim.bo.fenc ~= '' and vim.bo.fenc or vim.o.enc
+          local ff = vim.bo.ff
+          local ff_icon = ''
+          if ff == 'unix' then
+            ff_icon = ''  -- Linux
+          elseif ff == 'dos' then
+            ff_icon = ''  -- Windows
+          elseif ff == 'mac' then
+            ff_icon = ''  -- Mac
+          end
+          return string.format('%s[%s %s]', enc, ff, ff_icon)
+        end,
+        color = { fg = "#FFFFFF", bg = nil }, -- nền của UTF-8
+        separator = '',
+      },
+    }, 
+
+    lualine_z = {
+      'progress',
+
+      -- Vị trí dòng/cột
+      function()
+        local current = vim.fn.line('.')
+        local total = vim.fn.line('$')
+        local col = vim.fn.col('.')
+        return string.format('\u{E0A1}: %d/%d \u{E0B3} @ %d', current, total, col)
+      end,
+
+      -- Warning count
+      {
+        function()
+          local ok, result = pcall(vim.fn['CocAction'], 'diagnosticList')
+          if not (ok and result and #result > 0) then return '' end
+          local warning_count, first_warning_line = 0, nil
+          for _, item in ipairs(result) do
+            if item.severity == 'Warning' then
+              warning_count = warning_count + 1
+              if not first_warning_line or item.lnum < first_warning_line then
+                first_warning_line = item.lnum
+              end
+            end
+          end
+          if warning_count > 0 then
+            return string.format('W:%d (L%d)', warning_count, first_warning_line)
+          end
+          return ''
+        end,
+        color = { fg = colors.fg, bg = colors.warning_bg },
+        separator = { left = '' }
+      },
+
+      -- Error count
+      {
+        function()
+          local ok, result = pcall(vim.fn['CocAction'], 'diagnosticList')
+          if not (ok and result and #result > 0) then return '' end
+          local error_count, first_error_line = 0, nil
+          for _, item in ipairs(result) do
+            if item.severity == 'Error' then
+              error_count = error_count + 1
+              if not first_error_line or item.lnum < first_error_line then
+                first_error_line = item.lnum
+              end
+            end
+          end
+          if error_count > 0 then
+            return string.format('E:%d (L%d)', error_count, first_error_line)
+          end
+          return ''
+        end,
+        color = { fg = colors.fg, bg = colors.error_bg },
+        separator = { left = '' }
+      },
+    },
+  },
+  tabline = {
+    lualine_a = {
+      {
+        'buffers',
+        mode = 2,
+        symbols = {
+          modified = ' ●',
+          alternate_file = '',
+          directory = '',
+        },
+      },
+    },
+    lualine_z = {
+      function() return "buffers" end,
+    },
+  },
+
+  extensions = { 'nvim-tree', 'quickfix', 'fugitive' },
+}
+EOF
