@@ -1,0 +1,113 @@
+" One dark biến màu đỏ (Onedark pro)
+lua << EOF
+local colors = {
+  black   = "#282c34",
+  fg      = "#abb2bf",
+  comment = "#5c6370",
+  red     = "#e06c75",
+  orange  = "#d19a66",
+  yellow  = "#e5c07b",
+  green   = "#98c379",
+  cyan    = "#56b6c2",
+  blue    = "#61afef",
+  purple  = "#c678dd",
+}
+
+-- Comments
+vim.api.nvim_set_hl(0, "@comment", { fg = colors.comment, italic = false })
+vim.api.nvim_set_hl(0, "@comment.todo", { fg = colors.purple, bold = true })
+vim.api.nvim_set_hl(0, "@comment.error", { fg = colors.red, bold = true })
+vim.api.nvim_set_hl(0, "@comment.warning", { fg = colors.orange, bold = true })
+
+-- Variables
+vim.api.nvim_set_hl(0, "@variable", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@variable.builtin", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@variable.parameter", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@variable.member", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@field", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@property", { fg = colors.red })
+
+-- Constants
+vim.api.nvim_set_hl(0, "@constant", { fg = colors.cyan })
+vim.api.nvim_set_hl(0, "@constant.builtin", { fg = colors.cyan })
+vim.api.nvim_set_hl(0, "@constant.macro", { fg = colors.cyan })
+vim.api.nvim_set_hl(0, "@constant.enum", { fg = colors.cyan })
+
+-- Types & classes
+vim.api.nvim_set_hl(0, "@type", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@type.builtin", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@type.definition", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@type.class", { fg = colors.yellow, bold = true })
+vim.api.nvim_set_hl(0, "@type.enum", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@namespace", { fg = colors.yellow })
+
+-- Functions
+vim.api.nvim_set_hl(0, "@function", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "@function.builtin", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "@function.call", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "@function.method", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "@function.macro", { fg = colors.cyan })
+
+-- Keywords & control flow
+vim.api.nvim_set_hl(0, "@keyword", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.function", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.operator", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.return", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.repeat", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.conditional", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.exception", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@keyword.type", { fg = colors.yellow })
+
+-- Preprocessor / include / import (One Dark Pro = xanh dương)
+vim.api.nvim_set_hl(0, "@keyword.import", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "@include", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "@preproc", { fg = colors.blue })
+
+-- Literals
+vim.api.nvim_set_hl(0, "@string", { fg = colors.green })
+vim.api.nvim_set_hl(0, "@string.escape", { fg = colors.purple })
+vim.api.nvim_set_hl(0, "@character", { fg = colors.green })
+vim.api.nvim_set_hl(0, "@number", { fg = colors.orange })
+vim.api.nvim_set_hl(0, "@boolean", { fg = colors.orange })
+vim.api.nvim_set_hl(0, "@float", { fg = colors.orange })
+
+-- Operators & punctuation
+vim.api.nvim_set_hl(0, "@operator", { fg = colors.fg })
+vim.api.nvim_set_hl(0, "@punctuation", { fg = colors.fg })
+
+-- Tags (HTML/JSX)
+vim.api.nvim_set_hl(0, "@tag", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colors.fg })
+
+-- Annotations / decorators
+vim.api.nvim_set_hl(0, "@attribute", { fg = colors.cyan, italic = true })
+vim.api.nvim_set_hl(0, "@decorator", { fg = colors.cyan, italic = true })
+
+-- Diagnostics
+vim.api.nvim_set_hl(0, "DiagnosticError", { fg = colors.red })
+vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = colors.orange })
+vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = colors.cyan })
+
+-- JSON, YAML, TOML
+vim.api.nvim_set_hl(0, "@label.json", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@field.yaml", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@property.toml", { fg = colors.red })
+
+-- Markdown
+vim.api.nvim_set_hl(0, "@text.title", { fg = colors.blue, bold = true })
+vim.api.nvim_set_hl(0, "@text.strong", { fg = colors.yellow, bold = true })
+vim.api.nvim_set_hl(0, "@text.emphasis", { fg = colors.purple, italic = true })
+vim.api.nvim_set_hl(0, "@text.uri", { fg = colors.blue, underline = true })
+vim.api.nvim_set_hl(0, "@text.literal", { fg = colors.green })
+vim.api.nvim_set_hl(0, "@text.quote", { fg = colors.comment, italic = true })
+
+-- HTML, CSS
+vim.api.nvim_set_hl(0, "@tag.html", { fg = colors.red })
+vim.api.nvim_set_hl(0, "@attribute.html", { fg = colors.yellow })
+vim.api.nvim_set_hl(0, "@property.css", { fg = colors.cyan })
+vim.api.nvim_set_hl(0, "@string.css", { fg = colors.green })
+
+vim.api.nvim_set_hl(0, "@module.cpp", { fg = colors.yellow })
+EOF

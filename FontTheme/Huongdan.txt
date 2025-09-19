@@ -1,0 +1,1 @@
+Copy đoạn font theme muốn custom vào sau colorscheme của theme chính (background)
